@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rajeev's Calculator</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            color: #333;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .inner-container {
+            width: 30%;
+            background-color: #007BFF;
+            color: white;
+            border: 2px solid #0056b3;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .button {
+            background-color: #0056b3;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 10px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #004494;
+        }
+        input[type="text"], select {
+            font-size: 17px;
+            border: 2px solid #0056b3;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        fieldset {
+            border: none;
+            margin: 20px 0;
+            padding: 0;
+            background-color: transparent;
+        }
+        label {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="inner-container">
+            <h1>SCIENTIFIC CALCULATOR</h1>
+            <form action="{{ url_for('Answer') }}" method="post">
+                <div>
+                    <label><b>Operation:</b></label>
+                    <select name="operation" style="font-size: 17px; border: 2px solid #0056b3; border-radius: 5px; padding: 5px;">
+                        <option value="+">+</option>
+                        <option value="-">-</option>
+                        <option value="*">*</option>
+                        <option value="/">/</option>
+                        <option value="pow">Power (x^y)</option>
+                        <option value="sqrt">Square Root (√x)</option>
+                        <option value="log">Logarithm base 2 (log2(x))</option>
+                        <option value="ceil">Ceiling (ceil(x))</option>
+                    </select>
+                </div>
+                <br>
+                <div>
+                    <label><b>Number 1:</b></label>
+                    <input type="text" name="Number1" pattern="[0-9.]*" placeholder="{{num1}}">
+                </div>
+                <br>
+                <div>
+                    <label><b>Number 2:</b></label>
+                    <input type="text" name="Number2" pattern="[0-9.]*" placeholder="{{num2}}">
+                </div>
+                <br>
+                <input class="button" type="submit" value="Submit">
+                <br>
+                <fieldset disabled>
+                    <div>
+                        <label><b>Result:</b></label>
+                        <input type="text" name="Answer" placeholder="{{Value}}">
+                    </div>
+                </fieldset>
+            </form>
+            <form action="{{ url_for('Answer') }}" method="post">
+                <input type="hidden" name="clear" value="clear">
+                <input class="button" type="submit" value="Clear History">
+            </form>
+            <br>
+            {% if history %}
+            <div style="background-color: white; color: #007BFF; padding: 10px; border-radius: 5px;">
+                <h3>Calculation History</h3>
+                <ul>
+                    {% for entry in history %}
+                    <li>{{ entry }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
+
